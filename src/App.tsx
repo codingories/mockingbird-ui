@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <Menu defaultIndex={0} onSelect={(index) => { alert(index) }}>
+        <Menu mode="vertical" defaultIndex={0} onSelect={(index) => { alert(index) }}>
           <MenuItem index={0}>
             cool link
           </MenuItem>
@@ -24,7 +24,6 @@ function App() {
         <Button btnType={ButtonType.Danger} size={ButtonSize.Small}> Small Danger </Button>
         <Button btnType={ButtonType.Link} href="http://www.baidu.com" target="_blank"> Baidu Link </Button>
         <Button btnType={ButtonType.Link} href="http://www.baidu.com" disabled> Disabled Link </Button>
-
       <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
