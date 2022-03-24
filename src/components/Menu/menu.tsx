@@ -1,5 +1,6 @@
 import React, {createContext, useState} from 'react';
 import classNames from 'classnames';
+import {MenuItemProps} from './menuItem';
 
 // 字符串字面量替换enum，这种方式更简便
 type MenuMode = 'horizontal' | 'vertical'
@@ -27,20 +28,35 @@ const Menu: React.FC<MenuProps> = (props) => {
     'menu-vertical': mode === 'vertical'
   });
   const handleClick = (index: number) => {
-    setCurrentActive(index)
-    if(onSelect) {
-      onSelect(index)
+    setCurrentActive(index);
+    if (onSelect) {
+      onSelect(index);
     }
-  }
+  };
   const passedContext: IMenuContext = {
     index: currentActive ? currentActive : 0,
     onSelect: handleClick
-  }
+  };
+
+  const renderChildren = () => {
+    // 直接用children很危险，React文档官方提供了React.Children.map的方法
+    return React.Children.map(children, (child, index) => {
+      const childElement = child as React.FunctionComponentElement<MenuItemProps>;
+      const {displayName} = childElement.type;
+      if (displayName === 'MenuItem') {
+        return React.cloneElement(childElement, {
+          index
+        })
+      } else {
+        console.warn("Warning: Menu has a child which is not a MenuItem component")
+      }
+    });
+  };
 
   return (
     <ul className={classes} style={style} data-testid="test-menu">
-      <MenuContext.Provider value = {passedContext}>
-      {children}
+      <MenuContext.Provider value={passedContext}>
+        {renderChildren()}
       </MenuContext.Provider>
     </ul>
   );
