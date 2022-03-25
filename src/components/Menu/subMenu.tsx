@@ -21,6 +21,28 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
     setMenuOpen(!menuOpen);
   };
 
+  let timer: any;
+  const handleMouse = (e: React.MouseEvent, toggle: boolean) => {
+    clearTimeout(timer)
+    e.preventDefault()
+    timer = setTimeout(()=>{
+      setMenuOpen(toggle)
+    }, 300)
+  }
+
+  const clickEvents = context.mode === 'vertical' ? {
+    onClick: handleClick
+  } : {}
+
+  const hoverEvents = context.mode !== 'vertical' ? {
+    onMouseEnter: (e: React.MouseEvent) => {
+      handleMouse(e, true)
+    },
+    onMouseLeave: (e: React.MouseEvent) => {
+      handleMouse(e, false)
+    }
+  }: {}
+
   const renderChildren = () => {
     const subMenuClasses = classNames('viking-submenu', {
       'menu-opened': menuOpen
@@ -40,8 +62,8 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
     );
   };
   return (
-    <li key={index} className={classes}>
-      <div className="submenu-title" onClick={handleClick}>
+    <li key={index} className={classes} {...hoverEvents}>
+      <div className="submenu-title" onClick={handleClick} {...clickEvents}>
         {title}
       </div>
       {renderChildren()}
