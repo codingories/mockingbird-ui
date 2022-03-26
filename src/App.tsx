@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <Menu mode="horizontal" defaultIndex="0" onSelect={(index) => { alert(index); }}>
+        <Menu mode="vertical" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
           <MenuItem>
             cool link
           </MenuItem>
