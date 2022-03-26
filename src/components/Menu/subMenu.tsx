@@ -1,10 +1,10 @@
-import React, {createContext, useState, FunctionComponentElement, useContext} from 'react';
+import React, {useState, FunctionComponentElement, useContext} from 'react';
 import classNames from 'classnames';
 import {MenuContext} from './menu';
 import {MenuItemProps} from './menuItem';
 
 export interface SubMenuProps {
-  index?: number;
+  index?: string;
   title: string;
   className?: string;
 }
@@ -50,7 +50,9 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
     const childrenComponent = React.Children.map(children, (child, i) => {
       const childElement = child as FunctionComponentElement<MenuItemProps>;
       if (childElement.type.displayName === 'MenuItem') {
-        return childElement;
+        return React.cloneElement(childElement, {
+          index: `${index}-${i}`
+        });
       } else {
         console.error('Warning: SubMenu has a child which is not a MenuItem component');
       }
