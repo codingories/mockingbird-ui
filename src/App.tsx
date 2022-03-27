@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import React from 'react';
 import Button, {ButtonSize, ButtonType} from './components/Button/button';
 import Menu from './components/Menu/menu';
@@ -8,6 +10,8 @@ function App() {
   return (
     <div className="App">
       <header>
+        <FontAwesomeIcon icon={faCoffee} size="10x"/>
+
         <Menu mode="vertical" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
           <MenuItem>
             cool link
