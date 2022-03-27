@@ -1,17 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import React from 'react';
 import Button, {ButtonSize, ButtonType} from './components/Button/button';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/subMenu';
+import Icon from './components/Icon/icon';
+import { library } from '@fortawesome/fontawesome-svg-core'
+// 这么写是所有的图标
+import { fas } from '@fortawesome/free-solid-svg-icons'
+library.add(fas)
+
+
 
 function App() {
   return (
     <div className="App">
       <header>
-        <FontAwesomeIcon icon={faCoffee} size="10x"/>
-
+        <Icon icon="arrow-down" theme="danger" size="10x"/>
+        {/*<FontAwesomeIcon icon={faCoffee} size="10x"/>*/}
         <Menu mode="vertical" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
           <MenuItem>
             cool link
