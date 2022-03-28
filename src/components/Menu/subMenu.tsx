@@ -17,7 +17,9 @@ const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) =>
   const [menuOpen, setMenuOpen] = useState(isOpened);
 
   const classes = classNames('menu-item submenu-item', className, {
-    'is-active': context.index === index
+    'is-active': context.index === index,
+    'is-opened': menuOpen,
+    'is-vertical': context.mode === 'vertical'
   });
 
   const handleClick = (e: React.MouseEvent) => {
