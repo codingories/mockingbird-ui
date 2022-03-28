@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <Icon icon="arrow-down" theme="danger" size="10x"/>
+        <Icon icon="arrow-down" theme="primary" size="10x"/>
         {/*<FontAwesomeIcon icon={faCoffee} size="10x"/>*/}
         <Menu mode="vertical" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
           <MenuItem>
