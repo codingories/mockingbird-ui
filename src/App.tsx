@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Menu from './components/Menu/menu';
 import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/subMenu';
 import { library } from '@fortawesome/fontawesome-svg-core'
-// 这么写是所有的图标
+import Transition from './components/Transition/transition';
+import Button from './components/Button/button'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 
 
-function App() {
+const App: React.FC = () => {
+  const [ show, setShow ] = useState(false);
   return (
     <div className="App">
       <header>
@@ -32,18 +34,41 @@ function App() {
             cool link 3
           </MenuItem>
         </Menu>
+        <Button size="lg" onClick={() => { setShow(!show) }}>
+            Toggle
+        </Button>
+        <Transition in={show} timeout={300} animation="zoom-in-top">
+          <div>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+            <p>
+              Edit <code>src/App.tsx</code> and save to reload.
+            </p>
+          </div>
+        </Transition>
+        <Transition in={show} timeout={300} animation="zoom-in-top" wrapper>
+          <Button btnType="primary" size="lg">A Large Button</Button>
+        </Transition>
 
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
