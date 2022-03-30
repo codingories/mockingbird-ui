@@ -1,3 +1,7 @@
+
+
+
+// @ts-ignore
 module.exports = {
   "stories": [
     "../src/components/**/*.stories.mdx",
