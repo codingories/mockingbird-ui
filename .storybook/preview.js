@@ -11,14 +11,14 @@ export const parameters = {
   },
 }
 
-export const styles = {
-  textAlign: 'center'
-}
-
-export const decorators = [
-  (Story) => (
-    <div style={styles}>
-      <Story />
-    </div>
-  )
-]
+// export const styles = {
+//   textAlign: 'center'
+// }
+//
+// export const decorators = [
+//   (Story) => (
+//     <div style={styles}>
+//       <Story />
+//     </div>
+//   )
+// ]
