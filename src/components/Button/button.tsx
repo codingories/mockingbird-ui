@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 // ButtonSize
@@ -19,14 +19,14 @@ interface BaseButtonProps {
 // 拿到所有Button的属性
 // 联合类型的亲兄弟，交叉类型看，将多个类型合并到一个类型
 
-type NativeButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLElement>
+type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>
 
-type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLElement>
+type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>
 
 // Partial 把属性都设置成可选的
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
-const Button: React.FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = (props) => {
   const {
     btnType,
     className,
