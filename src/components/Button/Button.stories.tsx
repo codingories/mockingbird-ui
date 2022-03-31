@@ -1,32 +1,31 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
-import { withInfo } from '@storybook/addon-info'
+import {withInfo} from '@storybook/addon-info';
 import Button from './button';
 import {PropsTable} from '../propsTable';
 
 
-
 const defaultButton = () => (
   <Button onClick={action('clicked')}>default button</Button>
-)
+);
 
 // buttonWithSize
 const buttonWithSize = () => (
   <>
-    <Button size="lg"> large button </Button>
-    <Button size="sm"> large button </Button>
+    <Button size="lg">large button</Button>
+    <Button size="sm">large button</Button>
   </>
-)
+);
 
 // buttonWithType
 const buttonWithType = () => (
   <>
-    <Button btnType="primary"> large button </Button>
-    <Button btnType="danger"> danger button </Button>
-    <Button btnType="link" href="https://baidu.com"> link button </Button>
+    <Button btnType="primary">large button</Button>
+    <Button btnType="danger">danger button</Button>
+    <Button btnType="link" href="https://baidu.com">link button</Button>
   </>
-)
+);
 
 const propDefinitions = [{
   property: 'className',
@@ -34,7 +33,7 @@ const propDefinitions = [{
   required: '否',
   description: '按钮的自定义类名',
   defaultValue: '无'
-}]
+}];
 
 //
 // // ts-ignore
@@ -74,23 +73,24 @@ const propDefinitions = [{
 //   );
 // };
 
-storiesOf('Button Component', module)
+
+// ## this is a header
+// ~~~js
+// const a = 'hello'
+// ~~~
+
+storiesOf('Button 组件', module)
   // @ts-ignore
   .addDecorator(withInfo)
   .addParameters({
     info: {
       text: `
-      this is a very nice component
-      ## this is a header
-      ~~~js
-      const a = 'hello'
-      ~~~
+      这是Button组件的文档
       `,
-      inline: false,
-      TableComponent: () => PropsTable({ propDefinitions }),
-      // source: true
+      inline: true,
+      // TableComponent: () => PropsTable({propDefinitions}),
     }
   })
-  .add('默认 Button', defaultButton, {info: { inline: true }})
+  .add('默认 Button', defaultButton)
   .add('不同尺寸的 Button', buttonWithSize)
-  // .add('不同类型的 Button', buttonWithType)
+  .add('不同类型的 Button', buttonWithType);

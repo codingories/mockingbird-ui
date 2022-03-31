@@ -29,7 +29,7 @@ type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>
 // Partial 把属性都设置成可选的
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
-export const Button: FC<ButtonProps> = (props) => {
+const Button: FC<ButtonProps> = (props) => {
   const {
     btnType,
     className,
