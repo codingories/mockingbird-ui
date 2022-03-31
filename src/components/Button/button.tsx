@@ -1,5 +1,8 @@
 import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
+
 
 // ButtonSize
 export type ButtonSize = 'lg' | 'sm';
@@ -67,6 +70,8 @@ export const Button: FC<ButtonProps> = (props) => {
 
 
 };
+
+
 
 Button.defaultProps = {
   disabled: false,
