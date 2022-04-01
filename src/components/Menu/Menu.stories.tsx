@@ -105,15 +105,3 @@ export const 垂直菜单 = (args: MenuProps) => (
   defaultOpenSubMenus: ['2'],
 };
 
-// export const 不同大小按钮 = Template.bind({});
-// 不同大小按钮.args = {
-//   size: 'lg',
-//   children: '不同大小按钮',
-// };
-//
-// export const 不同类型按钮 = Template.bind({});
-// 不同类型按钮.args = {
-//   btnType: 'primary',
-//   children: '不同类型按钮',
-// };
-

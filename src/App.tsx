@@ -17,25 +17,7 @@ const App: React.FC = () => {
     <div className="App">
       <header>
         <Icon theme="primary" icon="coffee" size="10x"/>
-        <Menu mode="vertical" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
-          <MenuItem>
-            cool link
-          </MenuItem>
-          <MenuItem disabled>
-            cool link 2
-          </MenuItem>
-          <SubMenu title="dropdown">
-            <MenuItem>
-              dropdown 1
-            </MenuItem>
-            <MenuItem>
-              dropdown 2
-            </MenuItem>
-          </SubMenu>
-          <MenuItem>
-            cool link 3
-          </MenuItem>
-        </Menu>
+
         <Button size="lg" onClick={() => { setShow(!show) }}>
             Toggle
         </Button>
