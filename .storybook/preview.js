@@ -1,5 +1,7 @@
 import "../src/styles/index.scss";
 import React from 'react';
+import anysort from 'anysort'
+
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -11,14 +13,4 @@ export const parameters = {
   },
 }
 
-// export const styles = {
-//   textAlign: 'center'
-// }
-//
-// export const decorators = [
-//   (Story) => (
-//     <div style={styles}>
-//       <Story />
-//     </div>
-//   )
-// ]
+

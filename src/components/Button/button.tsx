@@ -1,10 +1,7 @@
-import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
+import React, {FC, ButtonHTMLAttributes, AnchorHTMLAttributes} from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
 
-
-// ButtonSize
 export type ButtonSize = 'lg' | 'sm';
 // ButtonType
 export type ButtonType = 'primary' | 'default' | 'danger' | 'link';
@@ -13,7 +10,7 @@ export type ButtonType = 'primary' | 'default' | 'danger' | 'link';
 interface BaseButtonProps {
   className?: string;
   disabled?: boolean;
-  size?: ButtonSize;
+  size?: 'lg' | 'md' | 'sm';
   btnType?: ButtonType;
   children: React.ReactNode;
   href?: string;
@@ -29,6 +26,9 @@ type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>
 // Partial 把属性都设置成可选的
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
+/**
+ * Primary UI component for user interaction
+ */
 const Button: FC<ButtonProps> = (props) => {
   const {
     btnType,
@@ -51,7 +51,7 @@ const Button: FC<ButtonProps> = (props) => {
     return (
       <a className={classes}
          href={href}
-        {...restProps}
+         {...restProps}
       >
         {children}
       </a>
@@ -70,7 +70,6 @@ const Button: FC<ButtonProps> = (props) => {
 
 
 };
-
 
 
 Button.defaultProps = {
