@@ -6,12 +6,25 @@ import Icon from '../Icon/icon';
 import Transition from '../Transition/transition';
 
 export interface SubMenuProps {
+  /**
+   * 子菜单的索引， 如果不传，会有默认值，按顺序从0开始
+   */
   index?: string;
+  /**
+   * 多个子菜单的标题
+   */
   title: string;
+  /**
+   * 自定义的类名
+   */
   className?: string;
 }
 
-const SubMenu: React.FC<SubMenuProps> = ({index, title, children, className}) => {
+const SubMenu: React.FC<SubMenuProps> = ({
+                                           index,
+                                           title,
+                                           children,
+                                           className}) => {
   const context = useContext(MenuContext);
   const openedSubMenus = context.defaultOpenSubMenus as Array<String>
   const isOpened = (index && context.mode === 'vertical') ? openedSubMenus.includes(index) : false

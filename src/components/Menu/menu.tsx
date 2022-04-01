@@ -25,7 +25,7 @@ interface IMenuContext {
 export const MenuContext = createContext<IMenuContext>({index: '0'});
 
 const Menu: React.FC<MenuProps> = (props) => {
-  const {className, mode, style, children, defaultIndex, onSelect,defaultOpenSubMenus } = props;
+  const {className, mode, style, children, defaultIndex, onSelect, defaultOpenSubMenus } = props;
   const [currentActive, setCurrentActive] = useState(defaultIndex);
   const classes = classNames('viking-menu', className, {
     'menu-vertical': mode === 'vertical',

@@ -1,72 +1,108 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Menu from './menu';
+import Menu, {MenuProps} from './menu';
+import MenuItem from './menuItem';
+import SubMenu from './subMenu';
 
 
 
 export default {
   title: '组件展示/menu',
   component: Menu,
+  subcomponents: { SubMenu, MenuItem },
   argTypes: {
-    // className: {
-    //   description: '自定义的类名',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    //   control: { type: 'text' }
-    // },
-    //
-    // btnType: {
-    //   description: '按钮的类型',
-    //   table: {
-    //     defaultValue: { summary: 'default' },
-    //     type: { summary: 'default | primary | danger |link' },
-    //   },
-    //   control: { type: 'select', options: ['default', 'primary', 'danger', 'link'] }
-    // },
-    // disabled: {
-    //   description: '是否启用',
-    //   table: {
-    //     defaultValue: { summary: false },
-    //     type: { summary: 'false | true' },
-    //   },
-    //   control: { type: 'boolean', options: ['default', 'primary', 'danger', 'link'] }
-    // },
-    // size: {
-    //   description: '控制按钮的大小',
-    //   table: {
-    //     defaultValue: { summary: 'md' },
-    //     type: { summary: 'sm | md | lg' },
-    //   },
-    //   control: { type: 'select', options: ['sm', 'md', 'lg'] }
-    // },
-    // children: {
-    //   description: '传入的参数',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    // },
-    //
-    // href: {
-    //   description: '链接地址，当type为link时生效',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    //   control: { type: 'text' }
-    // },
+    mode: {
+      description: '菜单模式',
+      table: {
+        defaultValue: { summary: 'vertical' },
+        type: { summary: 'vertical | horizontal' },
+      },
+      control: { type: 'select', options: ['vertical', 'horizontal'] }
+    },
+    defaultIndex: {
+      description: '菜单下标',
+      table: {
+        defaultValue: { summary: 0 },
+        type: { summary: '0 | 1 | ...' },
+      },
+      control: { type: 'text', options: ['0', '1', '2', '3'] }
+    },
+    onSelect: {
+      description: '点击事件',
+      table: {
+        defaultValue: { summary: '' },
+        type: { summary: '(index: string) => { alert(index) }' },
+      },
+    },
+    defaultOpenSubMenus: {
+      description: '垂直模式下是否展开子菜单',
+      table: {
+        defaultValue: { summary: [] },
+        type: { summary: '[2]' },
+      },
+      control: { type: 'array', options: ['2'] }
+    },
   }
 } as ComponentMeta<typeof Menu>;
 
 
 const Template: ComponentStory<typeof Menu> = (args) => <Menu {...args} />;
 
+export const 水平菜单 = (args: MenuProps) => (
+    <Menu {...args}>
+      <MenuItem>
+        cool link
+      </MenuItem>
+      <MenuItem disabled>
+        cool link 2
+      </MenuItem>
+      <SubMenu title="dropdown">
+        <MenuItem>
+          dropdown 1
+        </MenuItem>
+        <MenuItem>
+          dropdown 2
+        </MenuItem>
+      </SubMenu>
+      <MenuItem>
+        cool link 3
+      </MenuItem>
+    </Menu>
+)
+水平菜单.args = {
+  mode: 'horizontal',
+  defaultIndex: '0',
+  onSelect: (index: string) => {  },
+  defaultOpenSubMenus: ['2'],
+};
 
-export const 菜单 = Template.bind({});
-菜单.args = {
-  children: '我是按钮',
+export const 垂直菜单 = (args: MenuProps) => (
+  <Menu {...args}>
+    <MenuItem>
+      cool link
+    </MenuItem>
+    <MenuItem disabled>
+      cool link 2
+    </MenuItem>
+    <SubMenu title="dropdown">
+      <MenuItem>
+        dropdown 1
+      </MenuItem>
+      <MenuItem>
+        dropdown 2
+      </MenuItem>
+    </SubMenu>
+    <MenuItem>
+      cool link 3
+    </MenuItem>
+  </Menu>
+)
+
+垂直菜单.args = {
+  mode: 'vertical',
+  defaultIndex: '0',
+  onSelect: (index: string) => {  },
+  defaultOpenSubMenus: ['2'],
 };
 
 // export const 不同大小按钮 = Template.bind({});

@@ -3,14 +3,26 @@ import classNames from 'classnames';
 import {MenuContext} from './menu'
 
 export interface MenuItemProps {
+  /**
+   * 子菜单的索引值
+   */
   index?: string
+  /**
+   * 是否禁用菜单
+   */
   disabled?: boolean
+  /**
+   * 自定义类名
+   */
   className?: string;
+  /**
+   * 自定义的class样式
+   */
   style?: React.CSSProperties
 }
 
-const MenuItem: React.FC<MenuItemProps> = (props) => {
-  const {index, disabled, style, children} = props;
+const MenuItem: React.FC<MenuItemProps> = ({index, disabled = false, style, children}) => {
+  // const {index, disabled, style, children} = props;
   const context = useContext(MenuContext);
   const classes = classNames('menu-item', classNames, {
     'is-disabled': disabled,

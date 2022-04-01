@@ -17,7 +17,7 @@ const App: React.FC = () => {
     <div className="App">
       <header>
         <Icon theme="primary" icon="coffee" size="10x"/>
-        <Menu mode="horizontal" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
+        <Menu mode="vertical" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
           <MenuItem>
             cool link
           </MenuItem>
