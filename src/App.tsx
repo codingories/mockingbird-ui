@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import Transition from './components/Transition/transition';
 import Button from './components/Button/button'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import Icon from './components/Icon/icon';
 library.add(fas)
 
 
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header>
+        <Icon theme="primary" icon="coffee" size="10x"/>
         <Menu mode="horizontal" defaultIndex="0" onSelect={(index) => { alert(index); }} defaultOpenSubMenus={['2']}>
           <MenuItem>
             cool link
