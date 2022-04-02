@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import {Input} from './input';
 
@@ -6,58 +6,13 @@ export default {
   title: '组件展示/Input',
   component: Input,
   argTypes: {
-    // className: {
-    //   description: '自定义的类名',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    //   control: { type: 'text' }
-    // },
-    //
-    // btnType: {
-    //   description: '按钮的类型',
-    //   table: {
-    //     defaultValue: { summary: 'default' },
-    //     type: { summary: 'default | primary | danger |link' },
-    //   },
-    //   control: { type: 'select', options: ['default', 'primary', 'danger', 'link'] }
-    // },
-    // disabled: {
-    //   description: '是否启用',
-    //   table: {
-    //     defaultValue: { summary: false },
-    //     type: { summary: 'false | true' },
-    //   },
-    //   control: { type: 'boolean', options: ['default', 'primary', 'danger', 'link'] }
-    // },
-    // size: {
-    //   description: '控制按钮的大小',
-    //   table: {
-    //     defaultValue: { summary: 'md' },
-    //     type: { summary: 'sm | md | lg' },
-    //   },
-    //   control: { type: 'select', options: ['sm', 'md', 'lg'] }
-    // },
-    // children: {
-    //   description: '传入的参数',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    // },
-    //
-    // href: {
-    //   description: '链接地址，当type为link时生效',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    //   control: { type: 'text' }
-    // },
   }
 } as ComponentMeta<typeof Input>;
 
+const ControlledInput = () => {
+  const [value, setValue] = useState('')
+  return <Input value={value} defaultValue={value} onChange={(e) => {setValue(e.target.value)}}/>
+}
 
 const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
 
