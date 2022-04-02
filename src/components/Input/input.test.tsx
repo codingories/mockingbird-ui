@@ -7,6 +7,8 @@ const defaultProps: InputProps = {
   onChange: jest.fn(),
   placeholder: 'test-input'
 }
+
+
 describe('test Input component', () => {
   it('should render the correct default Input', () => {
     const wrapper = render(<Input {...defaultProps}/>)

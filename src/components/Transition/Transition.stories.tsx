@@ -1,12 +1,7 @@
 import React, {useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Transition from './transition';
-import SubMenu from '../Menu/subMenu';
-import MenuItem from '../Menu/menuItem';
-import Menu, {MenuProps} from '../Menu/menu';
 import Button from '../Button/button';
-import {垂直菜单} from '../Menu/Menu.stories';
-import TransitionProps from './transition';
 
 
 
@@ -14,7 +9,6 @@ export default {
   title: '组件展示/Transition动画',
   component: Transition,
   argTypes: {
-
     animation: {
       description: '动画类型',
       table: {
@@ -45,41 +39,12 @@ export default {
         type: { summary: 'false | true' },
       },
     },
-    // size: {
-    //   description: '控制按钮的大小',
-    //   table: {
-    //     defaultValue: { summary: 'md' },
-    //     type: { summary: 'sm | md | lg' },
-    //   },
-    //   control: { type: 'select', options: ['sm', 'md', 'lg'] }
-    // },
-    // children: {
-    //   description: '传入的参数',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    // },
-    //
-    // href: {
-    //   description: '链接地址，当type为link时生效',
-    //   table: {
-    //     defaultValue: { summary: '' },
-    //     type: { summary: 'string' },
-    //   },
-    //   control: { type: 'text' }
-    // },
   }
 } as ComponentMeta<typeof Transition>;
 
 
 const Template: ComponentStory<typeof Transition> = (args) => <Transition {...args} />;
 
-
-// export const 动画 = Template.bind({});
-// 动画.args = {
-//   children: '我是按钮',
-// };
 
 export const 动画 = (args:any ) => {
   const [ show, setShow ] = useState(false);
