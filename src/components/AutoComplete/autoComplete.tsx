@@ -1,14 +1,15 @@
-import React, { FC, useState, ChangeEvent  } from 'react';
+import React, {FC, useState, ChangeEvent, ReactElement} from 'react';
 import { Input, InputProps } from '../Input/input'
 
 // 忽略掉InputProps的onSelect
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
   fetchSuggestions: (str: string) => string[];
   onSelect?: (item: string) => void;
+  renderOption?: (item: string) => ReactElement;
 }
 
 export const AutoComplete: FC<AutoCompleteProps> = (props) => {
-  const { fetchSuggestions, onSelect, value, ...restProps  } = props
+  const { fetchSuggestions, onSelect, value, renderOption, ...restProps  } = props
   const [ inputValue, setInputValue ] = useState(value)
   const [ suggestions, setSuggestions ] = useState<string[]>([])
   console.log(suggestions)
@@ -31,13 +32,17 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
   }
 
+  const renderTemplate = (item: string) => {
+    return renderOption ? renderOption(item) : item;
+  }
+
   const generateDropdown = () => {
     return (
       <ul>
         { suggestions.map((item, index) => {
           return (
             <li key={index} onClick={ () => handleSelect(item) }>
-              {item}
+              {renderTemplate(item)}
             </li>
           )
         }) }
