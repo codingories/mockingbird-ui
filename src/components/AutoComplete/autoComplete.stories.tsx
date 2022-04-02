@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { AutoComplete } from './autoComplete';
-import exp from 'constants';
+import {AutoComplete, DataSourceType} from './autoComplete';
 import {action} from '@storybook/addon-actions';
 
 export default {
@@ -16,18 +15,40 @@ const ControlledAutoComplete = () => {
   // return <AutoComplete value={value} defaultValue={value} onChange={(e) => {setValue(e.target.value)}}/>
 }
 
+interface LakerPlayerProps {
+  value: string;
+  number?: number;
+}
 
 export const SimpleComplete = () => {
-  const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins',
-    'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando']
+  // const lakers = ['bradley', 'pope', 'caruso', 'cook', 'cousins',
+  //   'james', 'AD', 'green', 'howard', 'kuzma', 'McGee', 'rando']
+  const lakersWithNumber = [
+    {value: 'bradley', number: 11},
+    {value: 'pope', number: 1},
+    {value: 'caruso', number: 4},
+    {value: 'cook', number: 2},
+    {value: 'cousins', number: 15},
+    {value: 'james', number: 23},
+    {value: 'AD', number: 3},
+    {value: 'green', number: 14},
+    {value: 'howard', number: 39},
+    {value: 'kuzma', number: 0},
+  ]
+
   const handleFetch = (query: string) => {
-    return lakers.filter(name => name.includes(query))
+    return lakersWithNumber.filter(player => player.value.includes(query))
   }
 
-  const renderOption = (item: string) => {
+  // const handleFetch = (query: string) => {
+  //   return lakers.filter(name => name.includes(query)).map(name => ({value: name}))
+  // }
+
+  const renderOption = (item: DataSourceType<LakerPlayerProps>) => {
     return (
       <>
-        <h2>Name: {item}</h2>
+        <h2>Name: {item.value}</h2>
+        <p>Number: {item.number}</p>
       </>
     )
   }
@@ -35,18 +56,7 @@ export const SimpleComplete = () => {
   return (
     <AutoComplete fetchSuggestions={handleFetch} onSelect={action('selected')} renderOption={renderOption}/>
   )
-  // const lakersWithNumber = [
-  //   {value: 'bradley', number: 11},
-  //   {value: 'pope', number: 1},
-  //   {value: 'caruso', number: 4},
-  //   {value: 'cook', number: 2},
-  //   {value: 'cousins', number: 15},
-  //   {value: 'james', number: 23},
-  //   {value: 'AD', number: 3},
-  //   {value: 'green', number: 14},
-  //   {value: 'howard', number: 39},
-  //   {value: 'kuzma', number: 0},
-  // ]
+
   // const handleFetch = (query: string) => {
   //   return lakers.filter(name => name.includes(query)).map(name => ({value: name}))
   // }
