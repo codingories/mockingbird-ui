@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Input, InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce';
+import useClickOutside from '../../hooks/useClickOutside';
 
 interface DataSourceObject {
   value: string;
@@ -23,8 +24,11 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const [ loading, setLoading ] = useState(false)
   const [ highlightIndex, setHighlightIndex ] = useState(-1)
   const triggerSearch = useRef(false);
-
+  const componentRef = useRef<HTMLDivElement>(null);
   const debouncedValue = useDebounce(inputValue, 500)
+  useClickOutside(componentRef, () => {
+    setSuggestions([])
+  })
 
   useEffect(() => {
     if (debouncedValue && triggerSearch.current) {
@@ -126,7 +130,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   }
 
   return (
-    <div className="viking-auto-complete">
+    <div className="viking-auto-complete" ref={componentRef}>
       <Input
         value={ inputValue }
         onChange={ handleChange }
