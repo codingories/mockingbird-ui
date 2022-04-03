@@ -5,6 +5,12 @@ import Menu, {MenuProps} from './menu';
 import MenuItem from './menuItem';
 import SubMenu from './subMenu'
 
+import Transition from '../Transition/transition';
+Transition.defaultProps = {
+  unmountOnExit: false,
+  appear: true,
+};
+
 const testProps: MenuProps = {
   defaultIndex: '0',
   onSelect: jest.fn(),

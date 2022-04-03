@@ -22,7 +22,6 @@ const Transition: React.FC<TransitionProps> = (props) => {
     wrapper,
     ...restProps
   } = props;
-  console.log('transition restProps', restProps)
   return (
     <CSSTransition
       classNames={classNames ? classNames : animation}

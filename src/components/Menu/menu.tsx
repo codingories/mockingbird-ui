@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import classNames from 'classnames';
 import {MenuItemProps} from './menuItem';
 
+
 // 字符串字面量替换enum，这种方式更简便
 type MenuMode = 'horizontal' | 'vertical'
 type SelectCallback = (selectedIndex: string) => void

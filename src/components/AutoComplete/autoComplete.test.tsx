@@ -3,6 +3,12 @@ import { config } from 'react-transition-group'
 import { render, RenderResult, fireEvent, waitFor } from '@testing-library/react'
 import { AutoComplete, AutoCompleteProps } from './autoComplete'
 
+import Transition from '../Transition/transition';
+Transition.defaultProps = {
+  unmountOnExit: false,
+  appear: true,
+};
+
 config.disabled = true
 
 const testArray = [
@@ -28,50 +34,49 @@ describe('test AutoComplete component', () => {
     // input change
     fireEvent.change(inputNode, {target: { value: 'a'}})
     await waitFor(() => {
-      // console.log(`wrapper.queryByText('ab')`,wrapper.queryByText('ab'))
-      // expect(wrapper.queryByText('ab')).toBeInTheDocument()
+      expect(wrapper.queryByText('ab')).toBeInTheDocument()
     })
-    // // should have two suggestion items
-    // expect(wrapper.container.querySelectorAll('.suggestion-item').length).toEqual(2)
-    // //click the first item
-    // fireEvent.click(wrapper.getByText('ab'))
-    // expect(testProps.onSelect).toHaveBeenCalledWith({value: 'ab', number: 11})
-    // expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
-    // //fill the input
-    // expect(inputNode.value).toBe('ab')
+    // should have two suggestion items
+    expect(wrapper.container.querySelectorAll('.suggestion-item').length).toEqual(2)
+    //click the first item
+    fireEvent.click(wrapper.getByText('ab'))
+    expect(testProps.onSelect).toHaveBeenCalledWith({value: 'ab', number: 11})
+    expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
+    //fill the input
+    expect(inputNode.value).toBe('ab')
   })
-  // it('should provide keyboard support', async () => {
-  //   // input change
-  //   fireEvent.change(inputNode, {target: { value: 'a'}})
-  //   await waitFor(() => {
-  //     expect(wrapper.queryByText('ab')).toBeInTheDocument()
-  //   })
-  //   const firstResult = wrapper.queryByText('ab')
-  //   const secondResult = wrapper.queryByText('abc')
-  //
-  //   // arrow down
-  //   fireEvent.keyDown(inputNode, { keyCode: 40 })
-  //   expect(firstResult).toHaveClass('is-active')
-  //   //arrow down
-  //   fireEvent.keyDown(inputNode, { keyCode: 40 })
-  //   expect(secondResult).toHaveClass('is-active')
-  //   //arrow up
-  //   fireEvent.keyDown(inputNode, { keyCode: 38 })
-  //   expect(firstResult).toHaveClass('is-active')
-  //   // press enter
-  //   fireEvent.keyDown(inputNode, { keyCode: 13 })
-  //   expect(testProps.onSelect).toHaveBeenCalledWith({value: 'ab', number: 11})
-  //   expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
-  // })
-  // it('click outside should hide the dropdown', async () => {
-  //   // input change
-  //   fireEvent.change(inputNode, {target: { value: 'a'}})
-  //   await waitFor(() => {
-  //     expect(wrapper.queryByText('ab')).toBeInTheDocument()
-  //   })
-  //   fireEvent.click(document)
-  //   expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
-  // })
+  it('should provide keyboard support', async () => {
+    // input change
+    fireEvent.change(inputNode, {target: { value: 'a'}})
+    await waitFor(() => {
+      expect(wrapper.queryByText('ab')).toBeInTheDocument()
+    })
+    const firstResult = wrapper.queryByText('ab')
+    const secondResult = wrapper.queryByText('abc')
+
+    // arrow down
+    fireEvent.keyDown(inputNode, { keyCode: 40 })
+    expect(firstResult).toHaveClass('is-active')
+    //arrow down
+    fireEvent.keyDown(inputNode, { keyCode: 40 })
+    expect(secondResult).toHaveClass('is-active')
+    //arrow up
+    fireEvent.keyDown(inputNode, { keyCode: 38 })
+    expect(firstResult).toHaveClass('is-active')
+    // press enter
+    fireEvent.keyDown(inputNode, { keyCode: 13 })
+    expect(testProps.onSelect).toHaveBeenCalledWith({value: 'ab', number: 11})
+    expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
+  })
+  it('click outside should hide the dropdown', async () => {
+    // input change
+    fireEvent.change(inputNode, {target: { value: 'a'}})
+    await waitFor(() => {
+      expect(wrapper.queryByText('ab')).toBeInTheDocument()
+    })
+    fireEvent.click(document)
+    expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
+  })
   // it('renderOption should generate the right template', () => {
   //
   // })
