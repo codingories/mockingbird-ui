@@ -4,6 +4,7 @@ import { Input, InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce';
 import useClickOutside from '../../hooks/useClickOutside';
+import Transition from '../Transition/transition'
 
 interface DataSourceObject {
   value: string;
@@ -26,6 +27,8 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const triggerSearch = useRef(false);
   const componentRef = useRef<HTMLDivElement>(null);
   const debouncedValue = useDebounce(inputValue, 500)
+  const [ showDropdown, setShowDropdown] = useState(false)
+
   useClickOutside(componentRef, () => {
     setSuggestions([])
   })
@@ -39,6 +42,9 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         results.then(data => {
           setLoading(false)
           setSuggestions(data)
+          if (data.length > 0) {
+            setShowDropdown(true)
+          }
         })
       } else {
         setSuggestions(results)
@@ -56,8 +62,6 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    console.log('e', e)
-    console.log(e.keyCode)
     switch (e.keyCode) {
       case 13:
         if (suggestions[highlightIndex]) {
@@ -65,28 +69,16 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         }
         break
       case 38:
+        console.log(123)
         highlight(highlightIndex - 1)
-        // if (highlightIndex === -1) {
-        //   setHighlightIndex(suggestions.length - 1)
-        // } else {
-        //   setHighlightIndex(highlightIndex - 1)
-        // }
         break
       case 40:
+        console.log(456)
         highlight(highlightIndex + 1)
-        // if (highlightIndex === suggestions.length - 1) {
-        //   setHighlightIndex(-1)
-        // } else {
-        //   setHighlightIndex(highlightIndex + 1)
-        // }
         break
       case 27:
-        // if (highlightIndex === suggestions.length - 1) {
-        //   setHighlightIndex(-1)
-        // } else {
-        //   setHighlightIndex(highlightIndex + 1)
-        // }
-        setSuggestions([])
+        console.log('esc')
+        setShowDropdown(false)
         break
       default:
         break
@@ -114,18 +106,23 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const generateDropdown = () => {
     return (
-      <ul>
-        { suggestions.map((item, index) => {
-          const cnames = classNames('suggestion-item', {
-            'item-highlighted': index === highlightIndex
-          })
-          return (
-            <li key={index} className={cnames} onClick={ () => handleSelect(item) }>
-              {renderTemplate(item)}
-            </li>
-          )
-        }) }
-      </ul>
+      <Transition in={showDropdown || loading}
+                  animation="zoom-in-top"
+                  timeout={300}
+                  onExited={() => {setSuggestions([])}}>
+        <ul className="viking-suggestion-list">
+          { suggestions.map((item, index) => {
+            const cnames = classNames('suggestion-item', {
+              'is-active': index === highlightIndex
+            })
+            return (
+              <li key={index} className={cnames} onClick={ () => handleSelect(item) }>
+                {renderTemplate(item)}
+              </li>
+            )
+          }) }
+        </ul>
+      </Transition>
     )
   }
 

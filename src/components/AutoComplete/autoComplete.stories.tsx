@@ -72,8 +72,7 @@ export const SimpleComplete = () => {
   const renderOption = (item: DataSourceType<GithubUserProps>) => {
     return (
       <>
-        <h2>Name: {item.login}</h2>
-        <p>url: {item.url}</p>
+        <div>Name: {item.login}</div>
       </>
     )
   }
