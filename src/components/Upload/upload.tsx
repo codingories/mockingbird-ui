@@ -7,13 +7,14 @@ import {
 
 export interface UploadProps {
   action: string;
+  beforeUpload?: (file: File) => boolean | Promise<File>;
   onProgress?: (percentage: number, file: File) => void;
   onSuccess?: (data: any, file: File) => void;
   onError?: (err: any, file: File) => void;
 }
 
 export const Upload: FC<UploadProps> = (props) => {
-  const {action, onProgress, onSuccess, onError} = props;
+  const {action, beforeUpload, onProgress, onSuccess, onError} = props;
   const fileInput = useRef<HTMLInputElement> (null);
   const handleClick = () => {
     if (fileInput.current) {
@@ -34,33 +35,49 @@ export const Upload: FC<UploadProps> = (props) => {
   const uploadFiles = (files: FileList) => {
     let postFiles = Array.from(files)
     postFiles.forEach(file => {
-      let formData = new FormData()
-      formData.append('fileName', file)
-      axios.post(action, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: (e) => {
-          let percentage = Math.round((e.loaded * 100) / e.total) || 0
-          if (percentage < 100) {
-            if(onProgress) {
-              onProgress(percentage, file)
-            }
-          }
+      if (!beforeUpload) {
+        post(file)
+      } else {
+        const result = beforeUpload(file);
+        if (result && result instanceof Promise) {
+          result.then(processedFile => {
+            post(processedFile)
+          })
+        } else if (result !== false) {
+          post(file)
         }
-      }).then( resp => {
-        console.log(resp)
-        if(onSuccess) {
-          onSuccess(resp.data, file)
-        }
-      }).catch(err => {
-        console.error(err)
-        if(onError) {
-          onError(err, file)
-        }
-      })
+      }
     })
   }
+
+  const post = (file: File) => {
+    let formData = new FormData()
+    formData.append('fileName', file)
+    axios.post(action, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: (e) => {
+        let percentage = Math.round((e.loaded * 100) / e.total) || 0
+        if (percentage < 100) {
+          if(onProgress) {
+            onProgress(percentage, file)
+          }
+        }
+      }
+    }).then( resp => {
+      console.log(resp)
+      if(onSuccess) {
+        onSuccess(resp.data, file)
+      }
+    }).catch(err => {
+      console.error(err)
+      if(onError) {
+        onError(err, file)
+      }
+    })
+  }
+
 
   return (
     <div className="viking-upload-component">
