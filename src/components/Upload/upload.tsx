@@ -30,6 +30,8 @@ export interface UploadProps {
   name?: string;
   data?: { [key: string]: any };
   withCredentials?: boolean;
+  accept?: string;
+  multiple?: boolean;
 }
 
 export const Upload: FC<UploadProps> = (props) => {
@@ -45,7 +47,9 @@ export const Upload: FC<UploadProps> = (props) => {
     name,
     headers,
     data,
-    withCredentials
+    withCredentials,
+    accept,
+    multiple
   } = props;
   const fileInput = useRef<HTMLInputElement>(null);
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
@@ -112,9 +116,13 @@ export const Upload: FC<UploadProps> = (props) => {
       percent: 0,
       raw: file
     };
-    setFileList([_file, ...fileList]);
+    // setFileList([_file, ...fileList]);
+    setFileList((prevList) => {
+      return [_file, ...prevList];
+    });
+
     let formData = new FormData();
-    formData.append(name || "fileName", file);
+    formData.append(name || 'fileName', file);
     if (data) {
       Object.keys(data).forEach(key => {
         formData.append(key, data[key]);
@@ -171,6 +179,8 @@ export const Upload: FC<UploadProps> = (props) => {
         ref={fileInput}
         onChange={handleFileChange}
         type="file"
+        accept={accept}
+        multiple={multiple}
       >
       </input>
       <UploadList fileList={fileList} onRemove={handleRemove}>
@@ -182,6 +192,6 @@ export const Upload: FC<UploadProps> = (props) => {
 
 Upload.defaultProps = {
   name: 'file'
-}
+};
 
 export default Upload;
