@@ -182,8 +182,7 @@ export const Upload: FC<UploadProps> = (props) => {
         {/*    {children}*/}
         {/*  </Dragger> : children}*/}
 
-        {/*  @ts-ignore */}
-        {drag ? <Dragger>
+        {drag ? <Dragger onFile={(files) => { uploadFiles(files) }}>
           {children}
         </Dragger> : children}
 
