@@ -2,7 +2,7 @@ import React, {FC, useRef, useState} from 'react';
 import axios from 'axios';
 import Button from '../Button/button';
 import {ChangeEvent} from 'react';
-import {UploadList} from './uploadList'
+import {UploadList} from './uploadList';
 
 export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error';
 
@@ -26,12 +26,29 @@ export interface UploadProps {
   onError?: (err: any, file: File) => void;
   onChange?: (file: File) => void;
   onRemove?: (file: UploadFile) => void;
+  headers?: { [key: string]: any };
+  name?: string;
+  data?: { [key: string]: any };
+  withCredentials?: boolean;
 }
 
 export const Upload: FC<UploadProps> = (props) => {
-  const {action, defaultFileList, beforeUpload, onProgress, onSuccess, onError, onChange, onRemove} = props;
+  const {
+    action,
+    defaultFileList,
+    beforeUpload,
+    onProgress,
+    onSuccess,
+    onError,
+    onChange,
+    onRemove,
+    name,
+    headers,
+    data,
+    withCredentials
+  } = props;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [ fileList, setFileList ] = useState<UploadFile[]>(defaultFileList || []);
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
   const updateFileList = (updateFile: UploadFile, updateObj: Partial<UploadFile>) => {
     setFileList(prevList => {
       return prevList.map(file => {
@@ -94,23 +111,24 @@ export const Upload: FC<UploadProps> = (props) => {
       size: file.size,
       percent: 0,
       raw: file
-    }
+    };
     setFileList([_file, ...fileList]);
     let formData = new FormData();
-    // "fileName"
-    formData.append(file.name, file);
+    formData.append(name || "fileName", file);
+    if (data) {
+      Object.keys(data).forEach(key => {
+        formData.append(key, data[key]);
+      });
+    }
     axios.post(action, formData, {
       headers: {
+        ...headers,
         'Content-Type': 'multipart/form-data'
       },
+      withCredentials,
       onUploadProgress: (e) => {
         let percentage = Math.round((e.loaded * 100) / e.total) || 0;
         if (percentage < 100) {
-          // console.log('fileList', fileList)
-          // setFileList((prevList) => {
-          //   console.log(prevList)
-          //   return prevList
-          // })
           updateFileList(_file, {percent: percentage, status: 'uploading'});
           if (onProgress) {
             onProgress(percentage, file);
@@ -138,7 +156,7 @@ export const Upload: FC<UploadProps> = (props) => {
     });
   };
 
-  console.log(fileList)
+  console.log(fileList);
   return (
     <div className="viking-upload-component">
       <Button
@@ -160,5 +178,10 @@ export const Upload: FC<UploadProps> = (props) => {
     </div>
   );
 };
+
+
+Upload.defaultProps = {
+  name: 'file'
+}
 
 export default Upload;

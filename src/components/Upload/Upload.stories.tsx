@@ -51,9 +51,11 @@ const defaultFileList = [
 SimpleUpload.args = {
   action: 'http://192.168.1.13:3000/upload',
   onChange: action('changed'),
-  // filePromise
-  // checkFileSize
   beforeUpload: filePromise,
   defaultFileList: defaultFileList,
-  style: {width: "500px"}
+  style: {width: "500px"},
+  name: "fileName",
+  data: {'key': 'value'},
+  headers: {'X-Powered-By': 'vinkingship'}
 };
+
