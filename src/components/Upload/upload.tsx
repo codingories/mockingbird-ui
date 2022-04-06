@@ -49,7 +49,8 @@ export const Upload: FC<UploadProps> = (props) => {
     data,
     withCredentials,
     accept,
-    multiple
+    multiple,
+    children
   } = props;
   const fileInput = useRef<HTMLInputElement>(null);
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
@@ -167,22 +168,24 @@ export const Upload: FC<UploadProps> = (props) => {
   console.log(fileList);
   return (
     <div className="viking-upload-component">
-      <Button
-        btnType="primary"
-        onClick={handleClick}
+      <div className="viking-upload-input"
+           style={{display: 'inline-block'}}
+           onClick={handleClick}
       >
-        Upload File
-      </Button>
-      <input
-        className="viking-file-input"
-        style={{display: 'none'}}
-        ref={fileInput}
-        onChange={handleFileChange}
-        type="file"
-        accept={accept}
-        multiple={multiple}
-      >
-      </input>
+        {children}
+        <input
+          className="viking-file-input"
+          style={{display: 'none'}}
+          ref={fileInput}
+          onChange={handleFileChange}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+        >
+        </input>
+      </div>
+
+
       <UploadList fileList={fileList} onRemove={handleRemove}>
       </UploadList>
     </div>
