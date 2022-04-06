@@ -42,5 +42,5 @@ SimpleUpload.args = {
   onChange: action('changed'),
   // filePromise
   // checkFileSize
-  beforeUpload: filePromise
+  // beforeUpload: filePromise
 };

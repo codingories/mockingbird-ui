@@ -1,23 +1,36 @@
-import React, {FC, useRef} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import axios from 'axios';
 import Button from '../Button/button';
-import {
-  ChangeEvent
-} from 'react';
+import {ChangeEvent} from 'react';
 
+export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error';
+
+export interface UploadFile {
+  uid: string;
+  size: number;
+  name: string;
+  status?: UploadFileStatus;
+  percent?: number;
+  raw?: File;
+  response?: any;
+  error?: any;
+}
 
 export interface UploadProps {
   action: string;
+  defaultFileList?: UploadFile[];
   beforeUpload?: (file: File) => boolean | Promise<File>;
   onProgress?: (percentage: number, file: File) => void;
   onSuccess?: (data: any, file: File) => void;
   onError?: (err: any, file: File) => void;
   onChange?: (file: File) => void;
+  onRemove?: (file: UploadFile) => void;
 }
 
 export const Upload: FC<UploadProps> = (props) => {
-  const {action, beforeUpload, onProgress, onSuccess, onError, onChange} = props;
+  const {action, defaultFileList, beforeUpload, onProgress, onSuccess, onError, onChange, onRemove} = props;
   const fileInput = useRef<HTMLInputElement>(null);
+  const [ fileList, setFileList ] = useState<UploadFile[]>(defaultFileList || []);
   const handleClick = () => {
     if (fileInput.current) {
       fileInput.current.click();
@@ -53,6 +66,15 @@ export const Upload: FC<UploadProps> = (props) => {
   };
 
   const post = (file: File) => {
+    let _file: UploadFile = {
+      uid: Date.now() + 'upload-file',
+      status: 'ready',
+      name: file.name,
+      size: file.size,
+      percent: 0,
+      raw: file
+    }
+    setFileList([_file, ...fileList]);
     let formData = new FormData();
     // "fileName"
     formData.append(file.name, file);
@@ -63,6 +85,11 @@ export const Upload: FC<UploadProps> = (props) => {
       onUploadProgress: (e) => {
         let percentage = Math.round((e.loaded * 100) / e.total) || 0;
         if (percentage < 100) {
+          // console.log('fileList', fileList)
+          setFileList((prevList) => {
+            console.log(prevList)
+            return prevList
+          })
           if (onProgress) {
             onProgress(percentage, file);
           }
@@ -87,7 +114,7 @@ export const Upload: FC<UploadProps> = (props) => {
     });
   };
 
-
+  console.log(fileList)
   return (
     <div className="viking-upload-component">
       <Button
