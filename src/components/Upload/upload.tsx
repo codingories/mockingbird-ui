@@ -3,6 +3,7 @@ import axios from 'axios';
 import Button from '../Button/button';
 import {ChangeEvent} from 'react';
 import {UploadList} from './uploadList';
+import Dragger from './dragger';
 
 export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error';
 
@@ -32,6 +33,7 @@ export interface UploadProps {
   withCredentials?: boolean;
   accept?: string;
   multiple?: boolean;
+  drag?: boolean;
 }
 
 export const Upload: FC<UploadProps> = (props) => {
@@ -50,7 +52,8 @@ export const Upload: FC<UploadProps> = (props) => {
     withCredentials,
     accept,
     multiple,
-    children
+    children,
+    drag
   } = props;
   const fileInput = useRef<HTMLInputElement>(null);
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
@@ -172,7 +175,18 @@ export const Upload: FC<UploadProps> = (props) => {
            style={{display: 'inline-block'}}
            onClick={handleClick}
       >
-        {children}
+        {/*{drag ?*/}
+        {/*  <Dragger onFile={(files) => {*/}
+        {/*    uploadFiles(files);*/}
+        {/*  }}>*/}
+        {/*    {children}*/}
+        {/*  </Dragger> : children}*/}
+
+        {/*  @ts-ignore */}
+        {drag ? <Dragger>
+          {children}
+        </Dragger> : children}
+
         <input
           className="viking-file-input"
           style={{display: 'none'}}

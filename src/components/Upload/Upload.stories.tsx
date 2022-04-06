@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import Upload, {UploadFile, UploadProps} from './upload';
 import {action} from '@storybook/addon-actions';
+import Icon from '../Icon/icon';
 
 
 const checkFileSize = (file: File) => {
@@ -32,6 +33,9 @@ export const SimpleUpload = (args: UploadProps) => {
   console.log('fuck2', args);
   return (<Upload
       {...args}>
+      <Icon icon="upload" size="5x" theme="secondary" />
+      <br/>
+      <p>Drag file over to upload</p>
     </Upload>
   );
 };
@@ -58,5 +62,6 @@ SimpleUpload.args = {
   headers: {'X-Powered-By': 'vinkingship'},
   accept: '.pdf',
   multiple: true,
+  drag: true
 };
 
