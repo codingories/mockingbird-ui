@@ -31,6 +31,17 @@ export const Upload: FC<UploadProps> = (props) => {
   const {action, defaultFileList, beforeUpload, onProgress, onSuccess, onError, onChange, onRemove} = props;
   const fileInput = useRef<HTMLInputElement>(null);
   const [ fileList, setFileList ] = useState<UploadFile[]>(defaultFileList || []);
+  const updateFileList = (updateFile: UploadFile, updateObj: Partial<UploadFile>) => {
+    setFileList(prevList => {
+      return prevList.map(file => {
+        if (file.uid === updateFile.uid) {
+          return {...file, ...updateObj};
+        } else {
+          return file;
+        }
+      });
+    });
+  };
   const handleClick = () => {
     if (fileInput.current) {
       fileInput.current.click();
@@ -86,10 +97,11 @@ export const Upload: FC<UploadProps> = (props) => {
         let percentage = Math.round((e.loaded * 100) / e.total) || 0;
         if (percentage < 100) {
           // console.log('fileList', fileList)
-          setFileList((prevList) => {
-            console.log(prevList)
-            return prevList
-          })
+          // setFileList((prevList) => {
+          //   console.log(prevList)
+          //   return prevList
+          // })
+          updateFileList(_file, {percent: percentage, status: 'uploading'});
           if (onProgress) {
             onProgress(percentage, file);
           }
@@ -97,6 +109,7 @@ export const Upload: FC<UploadProps> = (props) => {
       }
     }).then(resp => {
       console.log(resp);
+      updateFileList(_file, {status: 'success', response: resp.data});
       if (onSuccess) {
         onSuccess(resp.data, file);
       }
@@ -105,6 +118,7 @@ export const Upload: FC<UploadProps> = (props) => {
       }
     }).catch(err => {
       console.error(err);
+      updateFileList(_file, {status: 'error', error: err});
       if (onError) {
         onError(err, file);
       }
