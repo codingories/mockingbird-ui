@@ -2,6 +2,7 @@ import React, {FC, useRef, useState} from 'react';
 import axios from 'axios';
 import Button from '../Button/button';
 import {ChangeEvent} from 'react';
+import {UploadList} from './uploadList'
 
 export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error';
 
@@ -55,6 +56,15 @@ export const Upload: FC<UploadProps> = (props) => {
     uploadFiles(files);
     if (fileInput.current) {
       fileInput.current.value = '';
+    }
+  };
+
+  const handleRemove = (file: UploadFile) => {
+    setFileList(prevList => {
+      return prevList.filter(item => item.uid !== file.uid);
+    });
+    if (onRemove) {
+      onRemove(file);
     }
   };
 
@@ -143,7 +153,10 @@ export const Upload: FC<UploadProps> = (props) => {
         ref={fileInput}
         onChange={handleFileChange}
         type="file"
-      ></input>
+      >
+      </input>
+      <UploadList fileList={fileList} onRemove={handleRemove}>
+      </UploadList>
     </div>
   );
 };

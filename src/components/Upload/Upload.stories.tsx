@@ -1,7 +1,8 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import Upload, {UploadProps} from './upload';
+import Upload, {UploadFile, UploadProps} from './upload';
 import {action} from '@storybook/addon-actions';
+
 
 
 const checkFileSize = (file: File) => {
@@ -28,19 +29,31 @@ export default {
 const Template: ComponentStory<typeof Upload> = (args) => <Upload {...args} />;
 
 
-export const SimpleUpload = (args: UploadProps) => (
-  <Upload
-    {...args}>
-  </Upload>
-);
+export const SimpleUpload = (args: UploadProps) => {
+  console.log('fuck2', args)
+  return (<Upload
+      {...args}>
+    </Upload>
+  );
+};
 
 // onSuccess: action('success'),
 //   onProgress: action('progress'),
 //   onError: action('error')
+
+// @ts-ignore
+const defaultFileList = [
+  { uid: '123', size: 1234, name: 'hello.md', status: 'uploading', percent: 30 },
+  { uid: '122', size: 1234, name: 'xyz.md', status: 'success', percent: 30 },
+  { uid: '121', size: 1234, name: 'eyiha.md', status: 'error', percent: 30 }
+]
+
 SimpleUpload.args = {
   action: 'http://192.168.1.13:3000/upload',
   onChange: action('changed'),
   // filePromise
   // checkFileSize
-  beforeUpload: filePromise
+  // beforeUpload: filePromise,
+  defaultFileList: defaultFileList,
+  style: {width: "500px"}
 };
