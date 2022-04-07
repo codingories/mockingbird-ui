@@ -11,9 +11,7 @@ interface UploadListProps {
 
 
 export const UploadList: FC<UploadListProps> = (props) => {
-  console.log('props', props)
   const { fileList, onRemove } = props;
-  console.log('fuck' ,fileList)
   return (
     <ul className="viking-upload-list">
       {

@@ -148,7 +148,6 @@ export const Upload: FC<UploadProps> = (props) => {
         }
       }
     }).then(resp => {
-      console.log(resp);
       updateFileList(_file, {status: 'success', response: resp.data});
       if (onSuccess) {
         onSuccess(resp.data, file);
@@ -168,20 +167,12 @@ export const Upload: FC<UploadProps> = (props) => {
     });
   };
 
-  console.log(fileList);
   return (
     <div className="viking-upload-component">
       <div className="viking-upload-input"
            style={{display: 'inline-block'}}
            onClick={handleClick}
       >
-        {/*{drag ?*/}
-        {/*  <Dragger onFile={(files) => {*/}
-        {/*    uploadFiles(files);*/}
-        {/*  }}>*/}
-        {/*    {children}*/}
-        {/*  </Dragger> : children}*/}
-
         {drag ? <Dragger onFile={(files) => { uploadFiles(files) }}>
           {children}
         </Dragger> : children}
