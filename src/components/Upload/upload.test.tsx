@@ -17,7 +17,8 @@ const testProps = {
   action: "fakeurl.com",
   onSuccess: jest.fn(),
   onChange: jest.fn(),
-  onRemove: jest.fn()
+  onRemove: jest.fn(),
+  drag: true
 }
 
 
@@ -63,5 +64,24 @@ describe('test upload component', () => {
     }))
   })
 
+  it('drag and drop files should works fine', async () => {
+    fireEvent.dragOver(uploadArea)
+    expect(uploadArea).toHaveClass('is-dragover')
+    fireEvent.dragLeave(uploadArea)
+    expect(uploadArea).not.toHaveClass('is-dragover')
+
+    mockedAxios.post.mockResolvedValue({'data': 'cool'})
+    const mockDropEvent = createEvent.drop(uploadArea)
+    Object.defineProperty(mockDropEvent, "dataTransfer", {
+      value: {
+        files: [testFile]
+      }
+    })
+    fireEvent(uploadArea, mockDropEvent)
+    await waitFor(()=>{
+      expect(wrapper.queryByText('test.png')).toBeInTheDocument()
+    })
+    expect(testProps.onSuccess).toHaveBeenCalledWith('cool', testFile)
+  })
 })
 
