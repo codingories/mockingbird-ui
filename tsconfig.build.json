@@ -5,6 +5,8 @@
     "target": "ES5",
     "declaration": true,
     "jsx": "react",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
   },
   "include": [
    "src"
