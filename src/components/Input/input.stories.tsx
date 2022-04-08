@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {Input} from './input';
+import Input from './input';
 
 export default {
   title: '组件展示/Input',

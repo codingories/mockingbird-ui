@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {AutoComplete, DataSourceType} from './autoComplete';
+import AutoComplete, {DataSourceType} from './autoComplete';
 import {action} from '@storybook/addon-actions';
 
 export default {
