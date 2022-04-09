@@ -1,0 +1,27 @@
+.wrapper {
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > h1 h3{
+    font-size: 34px;
+    margin: 0;
+    line-height: 48px;
+    color: #555;
+  }
+  > p {
+    font-size: 18px;
+    line-height: 28px;
+    color: #888;
+    margin: 10px 0 5px
+  }
+  > h3 {
+    margin-top: 50px;
+  }
+  .aLink {
+    color: rgb(30, 33, 36);
+
+  }
+
+}

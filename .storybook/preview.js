@@ -10,6 +10,11 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  options: {
+    storySort: {
+      order: ['介绍', '组件展示'],
+    },
+  },
 }
 
 

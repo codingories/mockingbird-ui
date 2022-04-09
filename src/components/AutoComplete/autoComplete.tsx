@@ -69,11 +69,9 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
         }
         break
       case 38:
-        console.log(123)
         highlight(highlightIndex - 1)
         break
       case 40:
-        console.log(456)
         highlight(highlightIndex + 1)
         break
       case 27:
