@@ -44,7 +44,7 @@
     "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
     "storybook": "export NODE_ENV=development &&  start-storybook -p 8206 -s public",
     "build-storybook": "export NODE_ENV=development && build-storybook -s public",
-    "prepublish": "npm run test:nowatch && npm run build"
+    "prepublishOnly": "npm run test:nowatch && npm run build"
   },
   "eslintConfig": {
     "extends": [
